@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ag & Hort Expo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 8px;
+            align-items: center;
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 10px;
+        }
+
+        .led-image {
+            max-width: 60px;
+        }
+	
+	/*Uncomment stuff below to make website purdy!*/
+	
+	/*
+	h1 {
+	    text-align: center;
+	    background-color: green;
+	    color: white;
+	}	
+	*/
+	
+	/*Align footer and set color */
+	
+	/*
+	footer {
+	    text-align: center;
+	    padding 3px;
+	    background-color: green;
+	    color: white;
+	}
+	*/
+	
+	/*
+	body {
+	    background-image: url(static/corn-fields-agriculture.jpg);
+	    background-repeat: no-repeat;
+	    background-size: cover;
+	}	
+	*/
+
+	
+    </style>
+    
+        <script>
+        function toggleGPIO(state, pin) {
+            $.post("/gpio", { state: state, pin: pin }, function (data) {
+                console.log(data);
+                updateLEDImage(state, pin);
+            });
+        }
+
+    function updateLEDImage(state, pin) {
+    var imageElement = document.getElementById(`led-image-${pin}`);
+    if (state === "on" && pin === 23) {
+        imageElement.src = "/static/fan-on-image-23.png";
+        console.log("LED IMAGE 23");
+    } else if (state === "off" && pin === 23) {
+        imageElement.src = "/static/fan-off-image-23.png";
+    }
+
+    if (state === "on" && pin !== 23) {
+        imageElement.src = "/static/led-image-" + pin + ".png";
+    } else if (state === "off" && pin !== 23) {
+        imageElement.src = "/static/led_off.png";
+    }
+}
+
+    </script>
+    
+</head>
+<body>
+    <h1>Controlling Relay's with Raspberry Pi GPIO</h1>
+    <div class="grid-container">
+
+       <!-- 17 -->
+	<div>
+            <button class="button" onclick="toggleGPIO('on', 17)">Turn On Heater (Red LED)</button>
+        </div>
+        <div>
+            <button class="button" onclick="toggleGPIO('off', 17)">Turn Off Heater (Red LED)</button>
+        </div>
+
+	<!-- 17 image -->
+	<div>
+		<img class="led-image" id="led-image-17" src="/static/led_off.png">
+    </div>
+
+	<!-- 27 -->
+	<div>
+            <button class="button" onclick="toggleGPIO('on', 27)">Lock Doors (Green LED)</button>
+        </div>
+        <div>
+            <button class="button" onclick="toggleGPIO('off', 27)">Unlock Doors (Green LED)</button>
+        </div>
+
+	<!-- 27 image -->
+	<div>
+		<img class="led-image" id="led-image-27" src="/static/led_off.png">
+	</div>
+
+
+	<!-- 22 -->
+	<div>
+            <button class="button" onclick="toggleGPIO('on', 22)">Turn On Water Pump (Blue LED)</button>
+        </div>
+        <div>
+            <button class="button" onclick="toggleGPIO('off', 22)">Turn Off Water Pump (Blue LED)</button>
+        </div>
+
+    <!-- 22 image -->
+        <div>
+            <img class="led-image" id="led-image-22" src="/static/led_off.png">
+        </div>
+        
+    	<!-- 23 -->
+	<div>
+            <button class="button" onclick="toggleGPIO('on', 23)">Turn on fan</button>
+        </div>
+        <div>
+            <button class="button" onclick="toggleGPIO('off', 23)">Turn off fan</button>
+        </div>
+
+	<!-- 23 image -->
+	<div>
+		<img class="led-image" id="led-image-23" src="/static/fan-off-image-23.png">
+	</div>
+	
+	
+	<!-- 24 -->
+	<div>
+            <button class="button" onclick="toggleGPIO('on', 24)">5: UNUSED - turn on</button>
+        </div>
+        <div>
+            <button class="button" onclick="toggleGPIO('off', 24)">5:UNUSED - turn off</button>
+        </div>
+
+	<!-- 24 image -->
+	<div>
+		<img class="led-image" id="led-image-24" src="/static/led_off.png">
+	</div>
+	
+	
+	<!-- 25 -->
+	<div>
+            <button class="button" onclick="toggleGPIO('on', 25)">6: UNUSED - turn on</button>
+        </div>
+        <div>
+            <button class="button" onclick="toggleGPIO('off', 25)">6: UNUSED - turn off</button>
+        </div>
+
+	<!-- 25 image -->
+	<div>
+		<img class="led-image" id="led-image-25" src="/static/led_off.png">
+	</div>
+	
+	
+	<!-- 5 -->
+	<div>
+            <button class="button" onclick="toggleGPIO('on', 5)">7: UNUSED - turn on</button>
+        </div>
+        <div>
+            <button class="button" onclick="toggleGPIO('off', 5)">7: UNUSED - turn off</button>
+        </div>
+
+	<!-- 5 image -->
+	<div>
+		<img class="led-image" id="led-image-5" src="/static/led_off.png">
+	</div>
+	
+	
+	<!-- 6 -->
+	<div>
+            <button class="button" onclick="toggleGPIO('on', 6)">8: UNUSED - turn on</button>
+        </div>
+        <div>
+            <button class="button" onclick="toggleGPIO('off', 6)">8: UNUSED - turn off</button>
+        </div>
+
+	<!-- 6 image -->
+	<div>
+		<img class="led-image" id="led-image-6" src="/static/led_off.png">
+	</div>
+
+    </div>
+
+<!--
+    <footer>
+	<p>Author: Insert Your Name Here</p>
+	<p>Thanks for coming to the Ag & Horticulture Expo!</p>
+    </footer>
+-->
+
+</body>
+</html>
